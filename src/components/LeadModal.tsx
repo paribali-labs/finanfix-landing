@@ -27,9 +27,20 @@ export default function LeadModal({ open, onClose }: LeadModalProps) {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
-    console.log("Lead captured:", JSON.stringify({ name, email, phone, source: "finanfix-landing", timestamp: new Date().toISOString() }));
+    const leadData = { name, email, phone, source: "finanfix-landing" };
+
+    // Show success immediately — don't block UI on API response
     setSubmitted(true);
     setTimeout(() => { onClose(); setSubmitted(false); setErrors({}); }, 4000);
+
+    // Send to API; console.log as fallback if it fails
+    fetch("https://app.finanfix.com.br/api/v1/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(leadData),
+    }).catch(() => {
+      console.log("Lead captured:", JSON.stringify({ ...leadData, timestamp: new Date().toISOString() }));
+    });
   };
 
   return (
