@@ -21,6 +21,16 @@ export default function Navbar({ onOpenModal }: { onOpenModal: () => void }) {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
+  // Block body scroll when mobile menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   return (
     <motion.nav
       initial={{ y: -80 }}
@@ -81,45 +91,47 @@ export default function Navbar({ onOpenModal }: { onOpenModal: () => void }) {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — full-screen overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden overflow-hidden border-t border-border/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden fixed inset-0 top-16 z-40 bg-background border-t border-border/40"
           >
-            <div className="max-w-[1200px] mx-auto px-6 py-6 flex flex-col gap-1">
-              {navLinks.map((l) => (
+            <div className="flex flex-col h-full px-6 py-8">
+              {/* Navigation links */}
+              <div className="flex flex-col">
+                {navLinks.map((l) => (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-lg font-semibold text-muted-foreground hover:text-foreground py-4 border-b border-border/30 transition-colors duration-200"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+
+              {/* Action buttons — pinned to bottom */}
+              <div className="mt-auto flex flex-col gap-3 pb-8">
                 <a
-                  key={l.href}
-                  href={l.href}
+                  href={`${APP_URL}/login`}
                   onClick={() => setMenuOpen(false)}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground py-2.5 transition-colors duration-200"
+                  className="bg-primary text-primary-foreground px-5 py-3.5 rounded-lg text-base font-semibold text-center hover:bg-primary-light transition-all duration-300 w-full"
                 >
-                  {l.label}
+                  Entrar
                 </a>
-              ))}
-
-              {/* Divider */}
-              <div className="h-px bg-border/30 my-3" />
-
-              {/* Actions */}
-              <a
-                href={`${APP_URL}/login`}
-                onClick={() => setMenuOpen(false)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground py-2.5 transition-colors duration-200"
-              >
-                Entrar
-              </a>
-              <button
-                onClick={() => { setMenuOpen(false); onOpenModal(); }}
-                className="bg-primary text-primary-foreground px-5 py-3 rounded-lg text-sm font-semibold text-center mt-2 hover:bg-primary-light transition-all duration-300 w-full"
-              >
-                Começar grátis
-              </button>
+                <button
+                  onClick={() => { setMenuOpen(false); onOpenModal(); }}
+                  className="border border-border/60 text-foreground px-5 py-3.5 rounded-lg text-base font-semibold text-center hover:bg-white/5 transition-all duration-300 w-full"
+                >
+                  Começar grátis
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
