@@ -57,7 +57,7 @@ export default function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
-          <button
+          <a
             href="https://app.finanfix.com.br/signup"
             className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-7 py-3.5 rounded-[10px] font-bold text-[0.95rem] hover:bg-primary-light hover:-translate-y-0.5 hover:shadow-[0_8px_32px_hsl(var(--primary-glow-strong))] transition-all"
           >
