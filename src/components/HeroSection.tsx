@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const verbs = ["organiza", "simplifica", "automatiza", "protege"];
 
-export default function HeroSection({ onOpenModal }: { onOpenModal: () => void }) {
+export default function HeroSection() {
   const [verbIdx, setVerbIdx] = useState(0);
 
   useEffect(() => {
@@ -58,11 +58,11 @@ export default function HeroSection({ onOpenModal }: { onOpenModal: () => void }
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
           <button
-            onClick={onOpenModal}
+            href="https://app.finanfix.com.br/signup"
             className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-7 py-3.5 rounded-[10px] font-bold text-[0.95rem] hover:bg-primary-light hover:-translate-y-0.5 hover:shadow-[0_8px_32px_hsl(var(--primary-glow-strong))] transition-all"
           >
             Começar grátis →
-          </button>
+          </a>
           <a
             href="#como-funciona"
             className="inline-flex items-center justify-center gap-2 border border-border text-secondary-foreground px-7 py-3.5 rounded-[10px] font-medium text-[0.95rem] hover:border-muted-foreground hover:text-foreground transition-all"
