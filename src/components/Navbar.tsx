@@ -11,7 +11,7 @@ const navLinks = [
   { label: "Preços", href: `${APP_URL}/pricing` },
 ];
 
-export default function Navbar({ onOpenModal }: { onOpenModal: () => void }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -74,12 +74,12 @@ export default function Navbar({ onOpenModal }: { onOpenModal: () => void }) {
             >
               Entrar
             </a>
-            <button
-              onClick={onOpenModal}
-              className="bg-primary hover:bg-primary-light text-primary-foreground px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:-translate-y-[1px] hover:shadow-[0_4px_20px_rgba(0,200,83,0.25)]"
+            <a
+              href={`${APP_URL}/signup`}
+              className="bg-primary hover:bg-primary-light text-primary-foreground px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-300 hover:-translate-y-[1px] hover:shadow-[0_4px_20px_rgba(0,200,83,0.25)] inline-block"
             >
               Começar grátis
-            </button>
+            </a>
           </div>
 
           {/* Mobile Toggle */}
@@ -127,12 +127,13 @@ export default function Navbar({ onOpenModal }: { onOpenModal: () => void }) {
                 >
                   Entrar
                 </a>
-                <button
-                  onClick={() => { setMenuOpen(false); onOpenModal(); }}
-                  className="border border-border/60 text-foreground px-5 py-3.5 rounded-lg text-base font-semibold text-center hover:bg-white/5 transition-all duration-300 w-full"
+                <a
+                  href={`${APP_URL}/signup`}
+                  onClick={() => setMenuOpen(false)}
+                  className="border border-border/60 text-foreground px-5 py-3.5 rounded-lg text-base font-semibold text-center hover:bg-white/5 transition-all duration-300 w-full inline-block"
                 >
                   Começar grátis
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>
